@@ -1,0 +1,30 @@
+{
+	"private": false,
+    "name":"@barbosa89/vue-table",
+    "version":"0.0.1",
+    "description":"Classical data table",
+    "main":"./dist/index.js",
+    "scripts":{
+        "test":"echo \"Error: no test specified\" && exit 1",
+        "dev":"vue serve src/Table.vue",
+        "build":"npx bili --bundle-node-modules --minify"
+    },
+    "files":[
+        "dist/*"
+    ],
+    "keywords":[
+        "data",
+        "table",
+        "vue"
+    ],
+    "author":"Omar Barbosa",
+    "license":"MIT",
+    "dependencies":{
+        "axios":"^0.19.2"
+    },
+    "devDependencies":{
+        "bili":"^5.0.5",
+        "rollup-plugin-vue":"^5.1.9",
+        "vue-template-compiler":"^2.6.11"
+    }
+}
