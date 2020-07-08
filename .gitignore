@@ -9,4 +9,5 @@ Thumbs.db
 *.sublime-workspace
 .project
 /.vscode
+/dist
 
