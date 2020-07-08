@@ -24,26 +24,28 @@
             </div>
         </div>
 
-        <div class="table-responsive">
-            <table class="table" id="categories">
-                <thead>
-                    <tr>
-                        <th v-for="(header, index) in titles" :key="index" @click="setSort(header)">
-                            {{ header.description }} <span v-if="header.selected">&ddarr;</span>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody v-if="this.records.length > 0">
-                    <tr v-for="(record, index) in records" :key="index" :id="index">
-                        <slot name="record" :record="record"></slot>
-                    </tr>
-                </tbody>
-                <tbody v-else>
-                    <tr>
-                        <th>Sin datos</th>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table" id="categories">
+                    <thead>
+                        <tr>
+                            <th v-for="(header, index) in titles" :key="index" @click="setSort(header)">
+                                {{ header.description }} <span v-if="header.selected">&ddarr;</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody v-if="records.length > 0">
+                        <tr v-for="(record, index) in records" :key="index" :id="index">
+                            <slot name="record" :record="record"></slot>
+                        </tr>
+                    </tbody>
+                    <tbody v-else>
+                        <tr>
+                            <th>Sin datos</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="row">
@@ -123,7 +125,7 @@
 </template>
 
 <script>
-	import axios from 'axios'
+  import axios from 'axios'
 
     export default {
         mounted() {
@@ -148,7 +150,7 @@
         },
         data() {
             return {
-                titles: this.headers,
+                titles: [],
                 page: 1,
                 last: 1,
                 records: [],
@@ -274,15 +276,16 @@
                 return '';
             },
             prepareTitles() {
-                if (this.titles.length) {
+                if (this.headers.length) {
                     // Add  the selected custom field
-                    this.titles = this.titles.forEach((title) => {
+                    this.headers.forEach((title) => {
                         this.$set(title, 'selected', false);
+                        this.titles.push(title)
                     });
                 }
             },
             setSort(header) {
-                this.titles = this.titles.forEach((title) => {
+                this.titles.forEach((title) => {
                     title.selected = false;
                 });
 
