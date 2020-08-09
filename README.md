@@ -4,6 +4,15 @@ Vue-table is a data table component that allows the developer a high degree of c
 
 ![Vue Table](example/images/vue-table.png)
 
+## Features
+
+- Pagination
+- Go to specific page
+- Option for records by page
+- Search input
+- Multilingual support
+- Responsive
+
 ## Installation
 
 ```
@@ -216,3 +225,6 @@ Run production mode
 npm run build
 ```
 
+## Next steps
+- Custom user params
+- Create a data table package for infinite loading
