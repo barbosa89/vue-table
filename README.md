@@ -24,6 +24,10 @@ npm i @barbosa89/vue-table
 The component styles are based on the **Bootstrap 4** classes, so your project must work with that CSS framework.
 Vue-table is structured in three rows (.row), so you must nest the component inside a Bootstrap container (.container/.container-fluid).
 
+### How it works
+
+Vue-table does not display the data sent by the server directly, this passes each record to a slot, the developer uses the slot to determine the way the data is displayed.
+
 ### Props
 
 The component can be configured with four props:
