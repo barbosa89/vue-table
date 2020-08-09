@@ -38,15 +38,15 @@
                     field: 'id',
                 },
                 {
-                    description: 'Nombre',
+                    description: 'Name',
                     field: 'name',
                 },
                 {
-                    description: 'Apellido',
+                    description: 'Last',
                     field: 'last',
                 },
                 {
-                    description: 'Correo',
+                    description: 'Email',
                     field: 'email',
                 },
             ],

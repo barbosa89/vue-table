@@ -2,7 +2,7 @@
     <div>
         <div class="row">
             <div class="col-12">
-                Registros a mostrar:
+                {{ trans('display') }}:
             </div>
             <div class="col-12 col-sm-12 col-md-4 mr-auto mb-4">
                 <select class="form-control ml-md-1" v-model.number="perPage">
@@ -14,10 +14,10 @@
             </div>
             <div class="col-12 col-sm-12 col-md-4 mb-4">
                 <div class="input-group">
-                    <input class="form-control" type="search" v-model="query" placeholder="Buscar" />
+                    <input class="form-control" type="search" v-model="query" :placeholder="trans('search')" />
                     <div class="input-group-append">
                         <button class="input-group-text" id="btnGroupAddon">
-                            <i class="fa fa-search"></i>
+                            &#128269;
                         </button>
                     </div>
                 </div>
@@ -49,8 +49,8 @@
         </div>
 
         <div class="row">
-            <div class="mb-4 col-12 col-sm-12 col-md-6 col-lg-9 text-center text-sm-center text-md-left">
-                Registros del {{ this.from }} al {{ this.to }} de un total de {{ this.total }}
+            <div class="mb-4 col-12 col-sm-12 col-md-6 col-lg-9 text-center text-sm-center text-md-left align-self-center">
+                <p>{{ trans('record') }} {{ this.from }} {{ trans('of') }} {{ this.to }} / {{ trans('total') }} {{ this.total }}</p>
             </div>
             <div class="mb-4 col-12 col-sm-12 col-md-3 col-lg-2">
                 <nav aria-label="Page navigation example">
@@ -108,7 +108,6 @@
                         type="number"
                         step="1"
                         class="form-control"
-                        :placeholder="'Ir a página'"
                         :value="page"
                         @change="setPage($event)"
                     />
@@ -125,7 +124,7 @@
 </template>
 
 <script>
-  import axios from 'axios'
+    import axios from 'axios'
 
     export default {
         mounted() {
@@ -147,6 +146,33 @@
                     return ''
                 },
             },
+            lang: {
+                type: String,
+                default: function () {
+                    return 'en'
+                }
+            },
+            locales: {
+                type: Object,
+                default: function () {
+                    return {
+                        en:{
+                            display: 'Records per page',
+                            search: 'Search',
+                            record: 'Record',
+                            of: 'of',
+                            total: 'Total'
+                        },
+                        es:{
+                            display: 'Registros por página',
+                            search: 'Buscar',
+                            record: 'Registro',
+                            of: 'de',
+                            total: 'Total'
+                        }
+                    }
+                }
+            }
         },
         data() {
             return {
@@ -161,7 +187,7 @@
                 to: 0,
                 query: '',
                 sort: '',
-                direction: '',
+                direction: ''
             };
         },
         watch: {
@@ -314,6 +340,9 @@
                     asc: `&ordered_asc=${header.field}`,
                 };
             },
+            trans(key) {
+                return this.locales[this.lang][key]
+            }
         },
     };
 </script>
