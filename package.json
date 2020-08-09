@@ -25,6 +25,13 @@
         "table",
         "vue"
     ],
+    "repository": {
+        "type" : "git",
+        "url" : "https://github.com/barbosa89/vue-table.git"
+    },
+    "publishConfig": {
+        "registry":"https://npm.pkg.github.com/"
+    },
     "author": "Omar Barbosa",
     "license": "MIT",
     "dependencies": {
