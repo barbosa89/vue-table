@@ -32,8 +32,8 @@ Vue-table does not display the data sent by the server directly, this passes eac
 
 The component can be configured with four props:
 
-- Headers: It is an array that contains objects with two properties, **description** and **field**, the **description** property is required and represents a table column header; the **field** is optional, it is used as a data sort column.
-- URL: The endpoint from which Axios will request data.
+- headers: It is an array that contains objects with two properties, **description** and **field**, the **description** property is required and represents a table column header; the **field** is optional, it is used as a data sort column.
+- url: The endpoint from which Axios will request data.
 - lang (en/es): The language to use, by default is English, English and Spanish are supported.
 - locales: It is an object of translations.
 
