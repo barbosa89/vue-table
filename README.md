@@ -1,6 +1,6 @@
-# Vue Table component
+# Vue-table component
 
-VueTable is a data table component that allows the developer a high degree of customization, it takes care of complex tasks and gives the developer control over how the data is displayed. This component works with the **Laravel** framework pagination response.
+Vue-table is a data table component that allows the developer a high degree of customization, it takes care of complex tasks and gives the developer control over how the data is displayed. This component works with the **Laravel** framework pagination response.
 
 ![Vue Table](example/images/vue-table.png)
 
@@ -13,7 +13,7 @@ npm i @barbosa89/vue-table
 ## Usage
 
 The component styles are based on the **Bootstrap 4** classes, so your project must work with that CSS framework.
-Vue-table is structured in three rows (.row), so you must nest the component inside a Bootstrap container (.container).
+Vue-table is structured in three rows (.row), so you must nest the component inside a Bootstrap container (.container/.container-fluid).
 
 ### Props
 
@@ -21,7 +21,7 @@ The component can be configured with four props:
 
 - Headers: It is an array that contains objects with two properties, **description** and **field**, the **description** property is required and represents a table column header; the **field** is optional, it is used as a data sort column.
 - URL: The endpoint from which Axios will request data.
-- lang: The language to use, by default is English, English and Spanish are supported.
+- lang (en/es): The language to use, by default is English, English and Spanish are supported.
 - locales: It is an object of translations.
 
 ### Example
@@ -140,7 +140,7 @@ Vue-table sends Laravel a series of parameters namely:
 - query_by: The search param
 - ordered_desc/ordered_asc
 
-URI example:
+URL example:
 
 ```
 mylaravel.app/endpoint?page=1&per_page=15&query_by_=text&ordered_desc=column_name
