@@ -30,8 +30,10 @@
         "type": "git",
         "url": "https://github.com/barbosa89/vue-table.git"
     },
-    "publishConfig": {
-        "registry": "https://npm.pkg.github.com/"
+    "homepage": "https://github.com/barbosa89/vue-table",
+    "bugs": {
+        "url": "https://github.com/barbosa89/vue-table/issues",
+        "email": "contacto@omarbarbosa.com"
     },
     "author": "Omar Barbosa",
     "license": "MIT",
