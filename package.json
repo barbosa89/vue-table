@@ -16,6 +16,7 @@
         "example/*",
         ".gitignore",
         "bili.config.js",
+        "LICENSE",
         "package.json",
         "package-lock.json",
         "README.md"

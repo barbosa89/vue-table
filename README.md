@@ -2,7 +2,7 @@
 
 Vue-table is a data table component that allows the developer a high degree of customization, it takes care of complex tasks and gives the developer control over how the data is displayed. This component works with the **Laravel** framework pagination response.
 
-![Vue Table](example/images/vue-table.png)
+![Vue Table](https://github.com/barbosa89/vue-table/blob/master/example/images/vue-table.png)
 
 ## Features
 
@@ -230,5 +230,4 @@ npm run build
 ```
 
 ## Next steps
-- Custom user params
 - Create a data table package for infinite loading

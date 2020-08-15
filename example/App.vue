@@ -2,7 +2,7 @@
     <section id="app">
         <div class="container">
             <h1 class="text-center my-4">Vue Table component</h1>
-            <your-component :headers="headers" :url="url">
+            <your-component :headers="headers" :url="url" :params="params">
                 <template v-slot:record="{ record }">
                     <td>
                         <a href="#">
@@ -50,7 +50,10 @@
                     field: 'email',
                 },
             ],
-            url: 'https://reqres.in/api/users?page=1'
+            url: 'https://reqres.in/api/users?page=1',
+            params: {
+                filter: 'value'
+            }
         };
     },
   }

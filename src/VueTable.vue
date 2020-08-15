@@ -172,7 +172,13 @@
                         }
                     }
                 }
-            }
+            },
+            params: {
+                type: Object,
+                default: function () {
+                    return {}
+                }
+            },
         },
         data() {
             return {
@@ -218,18 +224,28 @@
             },
         },
         methods: {
-            getLink() {
-                return `${this.url}?page=${this.page}&per_page=${this.perPage}${this.getQuery()}${this.getSortBy()}`;
+            assignParams() {
+                let required = {
+                    page: this.page,
+                    per_page: this.perPage
+                }
+
+                Object.assign(this.params, required);
+                this.assignQuery()
+                this.assignSortBy()
             },
             loadData() {
-                axios.get(this.getLink())
-                    .then((response) => {
-                        this.last = response.data.last_page;
-                        this.total = response.data.total;
-                        this.from = response.data.from;
-                        this.to = response.data.to;
-                        this.records = response.data.data;
-                    })
+                this.assignParams()
+
+                axios.get(this.url, {
+                    params: this.params
+                }).then((response) => {
+                    this.last = response.data.last_page;
+                    this.total = response.data.total;
+                    this.from = response.data.from;
+                    this.to = response.data.to;
+                    this.records = response.data.data;
+                })
             },
             nextPage() {
                 if (this.page < this.last) {
@@ -283,23 +299,17 @@
                     this.page = number;
                 }
             },
-            getQuery() {
+            assignQuery() {
                 if (this.state.hasOwnProperty('records')) {
                     if (this.query.length) {
-                        return `&query_by=${this.query}`;
+                        Object.assign(this.params, {query_by: this.query});
                     }
-
-                    return '';
                 }
-
-                return '';
             },
-            getSortBy() {
+            assignSortBy() {
                 if (this.sort.length) {
-                    return this.direction;
+                    Object.assign(this.params, {direction: this.direction});
                 }
-
-                return '';
             },
             prepareTitles() {
                 if (this.headers.length) {
