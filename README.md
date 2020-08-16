@@ -21,8 +21,7 @@ npm i @barbosa89/vue-table
 
 ## Usage
 
-The component styles are based on the **Bootstrap 4** classes, so your project must work with that CSS framework.
-Vue-table is structured in three rows (.row), so you must nest the component inside a Bootstrap container (.container/.container-fluid).
+The component styles are based on the CSS framework **Bootstrap 4**, so, Vue-table is structured in three rows (.row), so you must nest the component inside a Bootstrap container (.container/.container-fluid).
 
 ### How it works
 
@@ -33,9 +32,48 @@ Vue-table does not display the data sent by the server directly, this passes eac
 The component can be configured with four props:
 
 - headers: It is an array that contains objects with two properties, **description** and **field**, the **description** property is required and represents a table column header; the **field** is optional, it is used as a data sort column.
+```
+headers: [
+    {
+        description: 'Id',  # Name to display
+        field: 'id',        # Sortable column name in table
+    },
+    {
+        description: 'Email' # No sortable column
+    }
+]
+```
 - url: The endpoint from which Axios will request data.
+```
+url: https://myapp.com/endpoint
+```
 - lang (en/es): The language to use, by default is English, English and Spanish are supported.
 - locales: It is an object of translations.
+```
+locales: {
+    en:{
+        display: 'Records per page',
+        search: 'Search',
+        record: 'Record',
+        of: 'of',
+        total: 'Total'
+    },
+    es:{
+        display: 'Registros por página',
+        search: 'Buscar',
+        record: 'Registro',
+        of: 'de',
+        total: 'Total'
+    }
+}
+```
+- params: Object with additional parameters such as filters.
+```
+params: {
+    model: 'value',
+    reference: 'value
+}
+```
 
 ### Example
 
