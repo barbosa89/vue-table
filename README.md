@@ -31,12 +31,12 @@ Vue-table does not display the data sent by the server directly, this passes eac
 
 The component can be configured with four props:
 
-- headers: It is an array that contains objects with two properties, **description** and **field**, the **description** property is required and represents a table column header; the **field** is optional, it is used as a data sort column.
+- headers: It is an array that contains objects with two properties, **description** and **sortable**, the **description** property is required and represents a table column header; the **sortable** is optional, it is used as a data sort column.
 ```
 headers: [
     {
         description: 'Id',  # Name to display
-        field: 'id',        # Sortable column name in table
+        sortable: 'id',        # Sortable column name in table
     },
     {
         description: 'Email' # No sortable column
@@ -115,15 +115,15 @@ params: {
                 headers: [
                     {
                         description: 'Id',
-                        field: 'id', # Sortable column
+                        sortable: 'id', # Sortable column
                     },
                     {
                         description: 'Name',
-                        field: 'name', # Sortable column
+                        sortable: 'name', # Sortable column
                     },
                     {
                         description: 'Last',
-                        field: 'last', # Sortable column
+                        sortable: 'last', # Sortable column
                     },
                     {
                         description: 'Email' # No sortable column

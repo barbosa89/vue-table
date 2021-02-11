@@ -35,14 +35,14 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody v-if="records.length > 0">
-                    <tr v-for="(record, index) in records" :key="index" :id="index">
+                <tbody v-if="collection.length > 0">
+                    <tr v-for="(record, index) in collection" :key="index" :id="index">
                         <slot name="record" :record="record"></slot>
                     </tr>
                 </tbody>
                 <tbody v-else>
                     <tr>
-                        <th>Sin datos</th>
+                        <th :colspan="headers.length">...</th>
                     </tr>
                 </tbody>
             </table>
@@ -137,7 +137,15 @@
             this.prepareTitles();
         },
         created() {
+            if (this.data.length == 0) {
             this.loadData();
+            } else {
+                this.last = 1;
+                this.total = 1;
+                this.from = 1;
+                this.to = 1;
+                this.records = this.data.length;
+            }
         },
         props: {
             headers: {
@@ -185,6 +193,12 @@
                     return {}
                 }
             },
+            data: {
+                type: Array,
+                default: function () {
+                    return []
+                }
+            }
         },
         data() {
             return {
@@ -228,6 +242,15 @@
                     }
                 }
             },
+        },
+        computed: {
+            collection() {
+                if (this.data.length > 0) {
+                    return this.data;
+                }
+
+                return this.records;
+            }
         },
         methods: {
             assignParams() {
