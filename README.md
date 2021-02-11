@@ -43,11 +43,14 @@ headers: [
     }
 ]
 ```
+
 - url: The endpoint from which Axios will request data.
 ```
 url: https://myapp.com/endpoint
 ```
+
 - lang (en/es): The language to use, by default is English, English and Spanish are supported.
+
 - locales: It is an object of translations.
 ```
 locales: {
@@ -67,6 +70,7 @@ locales: {
     }
 }
 ```
+
 - params: Object with additional parameters such as filters.
 ```
 params: {
@@ -74,6 +78,8 @@ params: {
     reference: 'value
 }
 ```
+
+- data: Array data from user.
 
 ### Example
 
@@ -115,15 +121,15 @@ params: {
                 headers: [
                     {
                         description: 'Id',
-                        sortable: 'id', # Sortable column
+                        field: 'id', # Sortable column
                     },
                     {
                         description: 'Name',
-                        sortable: 'name', # Sortable column
+                        field: 'name', # Sortable column
                     },
                     {
                         description: 'Last',
-                        sortable: 'last', # Sortable column
+                        field: 'last', # Sortable column
                     },
                     {
                         description: 'Email' # No sortable column
