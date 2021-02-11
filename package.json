@@ -38,14 +38,14 @@
     "author": "Omar Barbosa",
     "license": "MIT",
     "dependencies": {
-        "axios": "^0.19.2",
+        "axios": "^0.21.1",
         "vue-runtime-helpers": "^1.1.2"
     },
     "devDependencies": {
         "bili": "^5.0.5",
-        "bootstrap": "^4.5.0",
+        "bootstrap": "^4.6.0",
         "rollup-plugin-vue": "^5.1.9",
-        "vue": "^2.6.11",
-        "vue-template-compiler": "^2.6.11"
+        "vue": "^2.6.12",
+        "vue-template-compiler": "^2.6.12"
     }
 }
