@@ -35,19 +35,19 @@
             headers: [
                 {
                     description: 'Id',
-                    field: 'id',
+                    sortable: 'id',
                 },
                 {
                     description: 'Name',
-                    field: 'name',
+                    sortable: 'name',
                 },
                 {
                     description: 'Last',
-                    field: 'last',
+                    sortable: 'last',
                 },
                 {
                     description: 'Email',
-                    field: 'email',
+                    sortable: 'email',
                 },
             ],
             url: 'https://reqres.in/api/users?page=1',
@@ -138,7 +138,7 @@
                     "first_name":"Rachel",
                     "last_name":"Howell",
                     "avatar":"https://reqres.in/img/faces/12-image.jpg"
-            }
+                }
             ],
         };
     },

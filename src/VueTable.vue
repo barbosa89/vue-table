@@ -138,7 +138,7 @@
         },
         created() {
             if (this.data.length == 0) {
-            this.loadData();
+                this.loadData();
             } else {
                 this.last = 1;
                 this.total = 1;
@@ -358,7 +358,7 @@
 
                 let direction = this.getDirection(header);
 
-                if (this.sort == header.field) {
+                if (this.sort == header.sortable) {
                     if (this.direction == direction.asc) {
                         this.direction = direction.desc;
                     } else if (this.direction == direction.desc) {
@@ -367,7 +367,7 @@
                         this.direction = direction.asc;
                     }
                 } else {
-                    this.sort = header.field;
+                    this.sort = header.sortable;
                     this.direction = direction.asc;
                 }
 
@@ -375,8 +375,8 @@
             },
             getDirection(header) {
                 return {
-                    desc: `&ordered_desc=${header.field}`,
-                    asc: `&ordered_asc=${header.field}`,
+                    desc: `&ordered_desc=${header.sortable}`,
+                    asc: `&ordered_asc=${header.sortable}`,
                 };
             },
             trans(key) {
