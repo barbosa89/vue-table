@@ -1,18 +1,20 @@
 <template>
     <div>
-        <div class="row">
-            <div class="col-12">
+        <div class="d-flex flex-column">
+            <span>
                 {{ trans('display') }}:
-            </div>
-            <div class="col-12 col-sm-12 col-md-4 mr-auto mb-4">
-                <select class="form-control ml-md-1" v-model.number="perPage">
+            </span>
+        </div>
+        <div class="d-flex mb-4">
+            <div class="mr-auto w-25">
+                <select class="form-control" v-model.number="perPage">
                     <option value="10">10</option>
                     <option value="25">25</option>
                     <option value="50">50</option>
                     <option value="100">100</option>
                 </select>
             </div>
-            <div class="col-12 col-sm-12 col-md-4 mb-4">
+            <div class="ml-auto w-25">
                 <div class="input-group">
                     <input class="form-control" type="search" v-model="query" :placeholder="trans('search')" />
                     <div class="input-group-append">
@@ -24,98 +26,102 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="table-responsive">
-                <table class="table" id="categories">
-                    <thead>
-                        <tr>
-                            <th v-for="(header, index) in titles" :key="index" @click="setSort(header)">
-                                {{ header.description }} <span v-if="header.selected">&ddarr;</span>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody v-if="records.length > 0">
-                        <tr v-for="(record, index) in records" :key="index" :id="index">
-                            <slot name="record" :record="record"></slot>
-                        </tr>
-                    </tbody>
-                    <tbody v-else>
-                        <tr>
-                            <th>Sin datos</th>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="table-responsive">
+            <table class="table" id="categories">
+                <thead>
+                    <tr>
+                        <th v-for="(header, index) in titles" :key="index" @click="setSort(header)">
+                            {{ header.description }} <span v-if="header.selected">&ddarr;</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody v-if="records.length > 0">
+                    <tr v-for="(record, index) in records" :key="index" :id="index">
+                        <slot name="record" :record="record"></slot>
+                    </tr>
+                </tbody>
+                <tbody v-else>
+                    <tr>
+                        <th>Sin datos</th>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
-        <div class="row">
-            <div class="mb-4 col-12 col-sm-12 col-md-6 col-lg-9 text-center text-sm-center text-md-left align-self-center">
-                <p>{{ trans('record') }} {{ this.from }} {{ trans('of') }} {{ this.to }} / {{ trans('total') }} {{ this.total }}</p>
+        <div class="d-flex">
+            <div class="mr-auto">
+                <div class="mb-4 text-center text-sm-center text-md-left align-self-center">
+                    <p>{{ trans('record') }} {{ this.from }} {{ trans('of') }} {{ this.to }} / {{ trans('total') }} {{ this.total }}</p>
+                </div>
             </div>
-            <div class="mb-4 col-12 col-sm-12 col-md-3 col-lg-2">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                            <a
-                                class="page-link"
-                                :class="[page == 1 ? 'disabled text-muted' : '']"
-                                href="#"
-                                aria-label="First"
-                                @click="goToFirst"
-                            >
-                                <span aria-hidden="true">&lt;&lt;</span>
-                            </a>
-                        </li>
-                        <li class="page-item">
-                            <a
-                                class="page-link"
-                                :class="[page == 1 ? 'disabled text-muted' : '']"
-                                href="#"
-                                aria-label="Previous"
-                                @click="goToPrev"
-                            >
-                                <span aria-hidden="true">&lt;</span>
-                            </a>
-                        </li>
-                        <li class="page-item">
-                            <a
-                                class="page-link"
-                                :class="[page == last ? 'disabled text-muted' : '']"
-                                href="#"
-                                aria-label="Next"
-                                @click="goToNext"
-                            >
-                                <span aria-hidden="true">&gt;</span>
-                            </a>
-                        </li>
-                        <li class="page-item">
-                            <a
-                                class="page-link"
-                                :class="[page == last ? 'disabled text-muted' : '']"
-                                href="#"
-                                aria-label="Last"
-                                @click="goToLast"
-                            >
-                                <span aria-hidden="true">&gt;&gt;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="mb-4 col-12 col-sm-12 col-md-3 col-lg-1">
-                <div class="input-group">
-                    <input
-                        type="number"
-                        step="1"
-                        class="form-control"
-                        :value="page"
-                        @change="setPage($event)"
-                    />
+            <div class="ml-auto">
+                <div class="d-flex">
+                    <div class="mb-4 mr-2 flex-fill">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item">
+                                    <a
+                                        class="page-link"
+                                        :class="[page == 1 ? 'disabled text-muted' : '']"
+                                        href="#"
+                                        aria-label="First"
+                                        @click="goToFirst"
+                                    >
+                                        <span aria-hidden="true">&lt;&lt;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a
+                                        class="page-link"
+                                        :class="[page == 1 ? 'disabled text-muted' : '']"
+                                        href="#"
+                                        aria-label="Previous"
+                                        @click="goToPrev"
+                                    >
+                                        <span aria-hidden="true">&lt;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a
+                                        class="page-link"
+                                        :class="[page == last ? 'disabled text-muted' : '']"
+                                        href="#"
+                                        aria-label="Next"
+                                        @click="goToNext"
+                                    >
+                                        <span aria-hidden="true">&gt;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a
+                                        class="page-link"
+                                        :class="[page == last ? 'disabled text-muted' : '']"
+                                        href="#"
+                                        aria-label="Last"
+                                        @click="goToLast"
+                                    >
+                                        <span aria-hidden="true">&gt;&gt;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="mb-4 flex-fill">
+                        <div class="input-group">
+                            <input
+                                type="number"
+                                step="1"
+                                class="form-control"
+                                :value="page"
+                                @change="setPage($event)"
+                            />
 
-                    <div class="input-group-append">
-                        <button class="input-group-text">
-                            {{ last }}
-                        </button>
+                            <div class="input-group-append">
+                                <button class="input-group-text">
+                                    {{ last }}
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
