@@ -32,7 +32,8 @@ Vue-table does not display the data sent by the server directly, this passes eac
 The component can be configured with four props:
 
 - headers: It is an array that contains objects with two properties, **description** and **sortable**, the **description** property is required and represents a table column header; the **sortable** is optional, it is used as a data sort column.
-```
+
+```js
 headers: [
     {
         description: 'Id',  # Name to display
@@ -45,14 +46,16 @@ headers: [
 ```
 
 - url: The endpoint from which Axios will request data.
+
 ```
-url: https://myapp.com/endpoint
+https://myapp.com/endpoint
 ```
 
 - lang (en/es): The language to use, by default is English, English and Spanish are supported.
 
 - locales: It is an object of translations.
-```
+
+```js
 locales: {
     en:{
         display: 'Records per page',
@@ -72,18 +75,54 @@ locales: {
 ```
 
 - params: Object with additional parameters such as filters.
-```
+```js
 params: {
     model: 'value',
-    reference: 'value
+    reference: 'value'
 }
 ```
 
-- data: Array data from user.
+- user-data: Array|Object data from user. If the prop is an array, a list without controls is printed. If the prop is an object, the Laravel pagination variables are assigned:
+
+```js
+{
+   "total": 50,
+   "per_page": 15,
+   "current_page": 1,
+   "last_page": 4,
+   "first_page_url": "http://laravel.app?page=1",
+   "last_page_url": "http://laravel.app?page=4",
+   "next_page_url": "http://laravel.app?page=2",
+   "prev_page_url": null,
+   "path": "http://laravel.app",
+   "from": 1,
+   "to": 15,
+   "data":[
+        {
+            // Result Object
+        },
+        {
+            // Result Object
+        }
+   ]
+}
+```
+
+When a Laravel paging object is assigned, the parent component must listen for an event to update the URL.
+
+```html
+<vue-table :url='myUrl' :user-data='paginationObject' @url-update='myUrl = $event'></vue-table>
+```
+
+Listen event using a method:
+
+```html
+<vue-table :url='myUrl' :user-data='paginationObject' @url-update='updateUrl'></vue-table>
+```
 
 ### Example
 
-```
+```html
 <template>
     <div class="container">
         <h1 class="text-center my-4">Vue Table component</h1>
@@ -168,7 +207,7 @@ params: {
 
 With packages like **vue-i18n**, you can automate multiple languages:
 
-```
+```js
 lang: document.documentElement.lang,
 locales: {
     en:{
@@ -205,8 +244,7 @@ mylaravel.app/endpoint?page=1&per_page=15&query_by_=text&ordered_desc=column_nam
 
 In an example of implementation in Laravel 7:
 
-```
-
+```php
 public function index()
 {
     $posts = Post::query();
@@ -226,7 +264,7 @@ public function index()
 
 You need to create three scopes corresponding to each parameter, excluding per_page and page, which are passed to Laravel directly:
 
-```
+```php
 // Eloquent model
 
 public function scopeQueryBy($query, $value)
@@ -247,7 +285,7 @@ public function scopeOrderedAsc($query, $value)
 
 ## Developers
 
-```
+```bash
 npm install -g @vue/cli
 
 # OR
@@ -257,19 +295,19 @@ yarn global add @vue/cli
 
 You will need an add-on service for Vue CLI
 
-```
+```bash
 npm install -g @vue/cli-service-global
 ```
 
 Run local server
 
-```
+```bash
 npm run dev
 ```
 
 Run production mode
 
-```
+```bash
 npm run build
 ```
 

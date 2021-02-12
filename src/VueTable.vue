@@ -1,30 +1,33 @@
 <template>
     <div>
-        <div class="d-flex flex-column">
-            <span>
-                {{ trans('display') }}:
-            </span>
-        </div>
-        <div class="d-flex mb-4">
-            <div class="mr-auto w-25">
-                <select class="form-control" v-model.number="perPage">
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                </select>
+        <template v-if="records.length > 0">
+            <div class="d-flex flex-column">
+                <span>
+                    {{ trans('display') }}:
+                </span>
             </div>
-            <div class="ml-auto w-25">
-                <div class="input-group">
-                    <input class="form-control" type="search" v-model="query" :placeholder="trans('search')" />
-                    <div class="input-group-append">
-                        <button class="input-group-text" id="btnGroupAddon">
-                            &#128269;
-                        </button>
+            <div class="d-flex mb-4">
+                <div class="mr-auto w-25">
+                    <select class="form-control" v-model.number="perPage">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+                <div class="ml-auto w-25">
+                    <div class="input-group">
+                        <input class="form-control" type="search" v-model="query" :placeholder="trans('search')" />
+                        <div class="input-group-append">
+                            <button class="input-group-text" id="btnGroupAddon">
+                                &#128269;
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </template>
+
 
         <div class="table-responsive">
             <table class="table" id="categories">
@@ -35,7 +38,7 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody v-if="collection.length > 0">
+                <tbody v-if="userData.length > 0 || records.length">
                     <tr v-for="(record, index) in collection" :key="index" :id="index">
                         <slot name="record" :record="record"></slot>
                     </tr>
@@ -48,7 +51,7 @@
             </table>
         </div>
 
-        <div class="d-flex">
+        <div v-if="records.length > 0" class="d-flex">
             <div class="mr-auto">
                 <div class="mb-4 text-center text-sm-center text-md-left align-self-center">
                     <p>{{ trans('record') }} {{ this.from }} {{ trans('of') }} {{ this.to }} / {{ trans('total') }} {{ this.total }}</p>
@@ -137,14 +140,23 @@
             this.prepareTitles();
         },
         created() {
-            if (this.data.length == 0) {
-                this.loadData();
+            if (Array.isArray(this.userData)) {
+                if (this.userData.length == 0) {
+                    this.loadData();
+                } else {
+                    this.last = 1;
+                    this.total = 1;
+                    this.from = 1;
+                    this.to = 1;
+                }
             } else {
-                this.last = 1;
-                this.total = 1;
-                this.from = 1;
-                this.to = 1;
-                this.records = this.data.length;
+                this.last = this.userData.last_page;
+                this.total = this.userData.total;
+                this.from = this.userData.from;
+                this.to = this.userData.to;
+                this.records = this.userData.data;
+
+                this.$emit('url-update', this.userData.path)
             }
         },
         props: {
@@ -193,8 +205,8 @@
                     return {}
                 }
             },
-            data: {
-                type: Array,
+            userData: {
+                type: [Array, Object],
                 default: function () {
                     return []
                 }
@@ -245,8 +257,8 @@
         },
         computed: {
             collection() {
-                if (this.data.length > 0) {
-                    return this.data;
+                if (Array.isArray(this.userData) && this.userData.length > 0) {
+                    return this.userData;
                 }
 
                 return this.records;
