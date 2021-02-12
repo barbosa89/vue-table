@@ -8,7 +8,8 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "build:demo": "./node_modules/poi/bin/cli.js build --out-dir demo",
         "dev": "vue serve example/index.js",
-        "build": "npx bili --bundle-node-modules --minify --format cjs,es,umd,umd-min --module-name VueTable"
+        "build": "npx bili --bundle-node-modules --minify --format cjs,es,umd,umd-min --module-name VueTable",
+        "prod": "npm run build"
     },
     "files": [
         "dist/*",
