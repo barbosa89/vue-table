@@ -1,6 +1,6 @@
 <template>
     <div>
-        <template v-if="records.length > 0">
+        <div v-if="records && records.length > 0">
             <div class="d-flex flex-column">
                 <span>
                     {{ trans('display') }}:
@@ -26,7 +26,7 @@
                     </div>
                 </div>
             </div>
-        </template>
+        </div>
 
 
         <div class="table-responsive">
