@@ -5,9 +5,7 @@
             <your-component
                 :headers="headers"
                 :url="url"
-                :params="params"
-                :user-data='data'
-                @url-update='url = $event'>
+                :params="params">
                 <template v-slot:record="{ record }">
                     <td>
                         <a href="#">

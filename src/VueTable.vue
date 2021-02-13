@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="records && records.length > 0">
+        <div v-if="url.length > 0">
             <div class="d-flex flex-column">
                 <span>
                     {{ trans('display') }}:
@@ -38,20 +38,20 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody v-if="userData.length > 0 || records.length">
-                    <tr v-for="(record, index) in collection" :key="index" :id="index">
+                <tbody v-if="records.length != 0">
+                    <tr v-for="(record, index) in records" :key="index" :id="index">
                         <slot name="record" :record="record"></slot>
                     </tr>
                 </tbody>
                 <tbody v-else>
                     <tr>
-                        <th :colspan="headers.length">...</th>
+                        <th :colspan="headers.length">...{{ records.length }}</th>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <div v-if="records.length > 0" class="d-flex">
+        <div v-if="url.length > 0" class="d-flex">
             <div class="mr-auto">
                 <div class="mb-4 text-center text-sm-center text-md-left align-self-center">
                     <p>{{ trans('record') }} {{ this.from }} {{ trans('of') }} {{ this.to }} / {{ trans('total') }} {{ this.total }}</p>
@@ -138,16 +138,13 @@
     export default {
         mounted() {
             this.prepareTitles();
-        },
-        created() {
+
             if (Array.isArray(this.userData)) {
+
                 if (this.userData.length == 0) {
                     this.loadData();
                 } else {
-                    this.last = 1;
-                    this.total = 1;
-                    this.from = 1;
-                    this.to = 1;
+                    this.records = this.userData
                 }
             } else {
                 this.last = this.userData.last_page;
@@ -254,15 +251,6 @@
                     }
                 }
             },
-        },
-        computed: {
-            collection() {
-                if (Array.isArray(this.userData) && this.userData.length > 0) {
-                    return this.userData;
-                }
-
-                return this.records;
-            }
         },
         methods: {
             assignParams() {
