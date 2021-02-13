@@ -1,6 +1,6 @@
 {
     "name": "@barbosa89/vue-table",
-    "version": "0.1.21",
+    "version": "0.1.22",
     "private": false,
     "description": "Classical data table",
     "main": "./dist/index.js",
