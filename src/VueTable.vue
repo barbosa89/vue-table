@@ -38,7 +38,7 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody v-if="records && records.length > 0">
+                <tbody v-if="records.length > 0">
                     <tr v-for="(record, index) in records" :key="index" :id="index">
                         <slot name="record" :record="record"></slot>
                     </tr>
