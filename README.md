@@ -31,7 +31,7 @@ Vue-table does not display the data sent by the server directly, this passes eac
 
 The component can be configured with four props:
 
-- headers: It is an array that contains objects with two properties, **description** and **sortable**, the **description** property is required and represents a table column header; the **sortable** is optional, it is used as a data sort column.
+- **headers**: It is an array that contains objects with two properties, **description** and **sortable**, the **description** property is required and represents a table column header; the **sortable** is optional, it is used as a data sort column.
 
 ```js
 headers: [
@@ -45,15 +45,15 @@ headers: [
 ]
 ```
 
-- url: The endpoint from which Axios will request data.
+- **url**: The endpoint from which Axios will request data.
 
 ```
 https://myapp.com/endpoint
 ```
 
-- lang (en/es): The language to use, by default is English, English and Spanish are supported.
+- **lang** (en/es): The language to use, by default is English, English and Spanish are supported.
 
-- locales: It is an object of translations.
+- **locales**: It is an object of translations.
 
 ```js
 locales: {
@@ -74,7 +74,7 @@ locales: {
 }
 ```
 
-- params: Object with additional parameters such as filters.
+- **params**: Object with additional parameters such as filters.
 ```js
 params: {
     model: 'value',
@@ -82,7 +82,7 @@ params: {
 }
 ```
 
-- user-data: Array|Object data from user. If the prop is an array, a list without controls is printed. If the prop is an object, the Laravel pagination variables are assigned:
+- **user-data**: Array|Object data from user. If the prop is an array, a list without controls is printed. If the prop is an object, the Laravel pagination variables are assigned:
 
 ```js
 {
@@ -119,6 +119,22 @@ Listen event using a method:
 ```html
 <vue-table :url='myUrl' :user-data='paginationObject' @url-update='updateUrl'></vue-table>
 ```
+
+- **data-key**: You can pass a custom data key to access the data received from the API service.
+
+```php
+return response()->json([
+    'key' => $collection,
+]);
+```
+
+when you don't pass a custom data key, it means the APi service send data as follows:
+
+```php
+return response()->json($collection);
+```
+
+- **search-icon**: Now you can pass a custom search icon, example: **fas fa-search**.
 
 ### Example
 

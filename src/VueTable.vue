@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="url.length > 0">
+        <div v-if="hasUrl">
             <div class="d-flex flex-column">
                 <span>
                     {{ trans('display') }}:
@@ -19,7 +19,10 @@
                     <div class="input-group">
                         <input class="form-control" type="search" v-model="query" :placeholder="trans('search')" />
                         <div class="input-group-append">
-                            <button class="input-group-text" id="btnGroupAddon">
+                            <button v-if="hasIcon" class="input-group-text" id="btnGroupAddon">
+                                <em :class="searchIcon"></em>
+                            </button>
+                            <button v-else class="input-group-text" id="btnGroupAddon">
                                 &#128269;
                             </button>
                         </div>
@@ -38,7 +41,7 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody v-if="records.length > 0">
+                <tbody v-if="hasRecords">
                     <tr v-for="(record, index) in records" :key="index" :id="index">
                         <slot name="record" :record="record"></slot>
                     </tr>
@@ -51,7 +54,7 @@
             </table>
         </div>
 
-        <div v-if="url.length > 0" class="d-flex">
+        <div v-if="hasUrl" class="d-flex">
             <div class="mr-auto">
                 <div class="mb-4 text-center text-sm-center text-md-left align-self-center">
                     <p>{{ trans('record') }} {{ this.from }} {{ trans('of') }} {{ this.to }} / {{ trans('total') }} {{ this.total }}</p>
@@ -140,7 +143,6 @@
             this.prepareTitles();
 
             if (Array.isArray(this.userData)) {
-
                 if (this.userData.length == 0) {
                     this.loadData();
                 } else {
@@ -207,6 +209,18 @@
                 default: function () {
                     return []
                 }
+            },
+            dataKey: {
+                type: String,
+                default: function () {
+                    return ''
+                }
+            },
+            searchIcon: {
+                type: String,
+                default: function () {
+                    return ''
+                }
             }
         },
         data() {
@@ -252,6 +266,18 @@
                 }
             },
         },
+        computed: {
+            hasUrl() {
+                return this.url.length > 0
+            },
+            hasRecords() {
+                return this.records.length > 0
+
+            },
+            hasIcon() {
+                return this.searchIcon.length > 0
+            }
+        },
         methods: {
             assignParams() {
                 let required = {
@@ -269,12 +295,23 @@
                 axios.get(this.url, {
                     params: this.params
                 }).then((response) => {
-                    this.last = response.data.last_page;
-                    this.total = response.data.total;
-                    this.from = response.data.from;
-                    this.to = response.data.to;
-                    this.records = response.data.data;
+                    const records = this.getDataObject(response)
+
+                    if (records.data.length) {
+                        this.last = records.last_page;
+                        this.total = records.total;
+                        this.from = records.from;
+                        this.to = records.to;
+                        this.records = records.data;
+                    }
                 })
+            },
+            getDataObject(response) {
+                if (this.dataKey.length) {
+                    return response.data[this.dataKey]
+                }
+
+                return response.data
             },
             nextPage() {
                 if (this.page < this.last) {
