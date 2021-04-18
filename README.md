@@ -128,7 +128,7 @@ return response()->json([
 ]);
 ```
 
-when you don't pass a custom data key, it means the APi service send data as follows:
+when you don't pass a custom data key, it means the API service send data as follows:
 
 ```php
 return response()->json($collection);
