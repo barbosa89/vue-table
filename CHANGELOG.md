@@ -3,7 +3,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.27] - 2021-04-22
+
+### Added
+- Reset records when query is empty.
+
 ## [0.1.26] - 2021-04-21
 
 ### Added
-- Run the query to the backend when the url changes
+- Run the query to the backend when the url changes.

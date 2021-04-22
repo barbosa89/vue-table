@@ -354,7 +354,12 @@
                 this.state.from = 0;
                 this.state.to = 0;
                 this.state.sort = '';
-                this.query = '';
+
+                if (this.query) {
+                    this.query = '';
+                } else {
+                    this.restoreState()
+                }
             },
             goToFirst() {
                 this.page = 1;
