@@ -252,19 +252,27 @@
             },
             query(current) {
                 if (current.length == 0 || this.query.length == 0) {
-                    this.resetState();
-                } else {
-                    if (current.length >= 3) {
-                        if (!this.state.hasOwnProperty('records')) {
-                            this.saveState();
-                        }
+                    this.restoreState();
+                }
 
-                        this.page = 1;
-                        this.sort = '';
-                        this.loadData();
+                if (current.length >= 3) {
+                    if (!this.state.hasOwnProperty('records')) {
+                        this.saveState();
                     }
+
+                    this.page = 1;
+                    this.sort = '';
+                    this.loadData();
                 }
             },
+            url() {
+                this.resetState()
+
+                if (this.url.length) {
+                    this.loadData();
+                }
+
+            }
         },
         computed: {
             hasUrl() {
@@ -327,7 +335,7 @@
                 this.state.to = this.to;
                 this.state.sort = this.sort;
             },
-            resetState() {
+            restoreState() {
                 this.records = this.state.records;
                 this.page = this.state.page;
                 this.last = this.state.last;
@@ -337,6 +345,16 @@
                 this.sort = this.state.sort;
 
                 this.state = {};
+            },
+            resetState() {
+                this.state.records = [];
+                this.state.page = 1;
+                this.state.last = 1;
+                this.state.total = 0;
+                this.state.from = 0;
+                this.state.to = 0;
+                this.state.sort = '';
+                this.query = '';
             },
             goToFirst() {
                 this.page = 1;
