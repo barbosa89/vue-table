@@ -249,13 +249,13 @@ Vue-table sends Laravel a series of parameters namely:
 
 - page
 - per_page
-- query_by: The search param
+- search: The search param
 - ordered_desc/ordered_asc
 
 URL example:
 
 ```
-mylaravel.app/endpoint?page=1&per_page=15&query_by_=text&ordered_desc=column_name
+mylaravel.app/endpoint?page=1&per_page=15&search_=text&ordered_desc=column_name
 ```
 
 In an example of implementation in Laravel 7:

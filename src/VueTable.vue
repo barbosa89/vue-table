@@ -17,7 +17,7 @@
                 </div>
                 <div class="ml-auto w-25">
                     <div class="input-group">
-                        <input class="form-control" type="search" v-model="query" :placeholder="trans('search')" />
+                        <input class="form-control" type="search" v-model="search" :placeholder="trans('search')" />
                         <div class="input-group-append">
                             <button v-if="hasIcon" class="input-group-text" id="btnGroupAddon">
                                 <em :class="searchIcon"></em>
@@ -66,48 +66,44 @@
                         <nav aria-label="Page navigation example">
                             <ul class="pagination justify-content-center">
                                 <li class="page-item">
-                                    <a
+                                    <button
                                         class="page-link"
-                                        :class="[page == 1 ? 'disabled text-muted' : '']"
-                                        href="#"
+                                        :class="[isFirstPage ? 'disabled text-muted' : '']"
                                         aria-label="First"
                                         @click="goToFirst"
                                     >
                                         <span aria-hidden="true">&lt;&lt;</span>
-                                    </a>
+                                    </button>
                                 </li>
                                 <li class="page-item">
-                                    <a
+                                    <button
                                         class="page-link"
-                                        :class="[page == 1 ? 'disabled text-muted' : '']"
-                                        href="#"
+                                        :class="[isFirstPage ? 'disabled text-muted' : '']"
                                         aria-label="Previous"
                                         @click="goToPrev"
                                     >
                                         <span aria-hidden="true">&lt;</span>
-                                    </a>
+                                    </button>
                                 </li>
                                 <li class="page-item">
-                                    <a
+                                    <button
                                         class="page-link"
-                                        :class="[page == last ? 'disabled text-muted' : '']"
-                                        href="#"
+                                        :class="[isLastPage ? 'disabled text-muted' : '']"
                                         aria-label="Next"
                                         @click="goToNext"
                                     >
                                         <span aria-hidden="true">&gt;</span>
-                                    </a>
+                                    </button>
                                 </li>
                                 <li class="page-item">
-                                    <a
+                                    <button
                                         class="page-link"
-                                        :class="[page == last ? 'disabled text-muted' : '']"
-                                        href="#"
+                                        :class="[isLastPage ? 'disabled text-muted' : '']"
                                         aria-label="Last"
                                         @click="goToLast"
                                     >
                                         <span aria-hidden="true">&gt;&gt;</span>
-                                    </a>
+                                    </button>
                                 </li>
                             </ul>
                         </nav>
@@ -117,9 +113,12 @@
                             <input
                                 type="number"
                                 step="1"
+                                min="1"
+                                :max="last"
                                 class="form-control"
                                 :value="page"
-                                @change="setPage($event)"
+                                @change="setPage"
+                                @keyup.enter="setPage"
                             />
 
                             <div class="input-group-append">
@@ -234,7 +233,7 @@
                 perPage: 10,
                 from: 0,
                 to: 0,
-                query: '',
+                search: '',
                 sort: '',
                 direction: ''
             };
@@ -250,8 +249,8 @@
                     this.page = 1;
                 }
             },
-            query(current) {
-                if (current.length == 0 || this.query.length == 0) {
+            search(current) {
+                if (current.length == 0 || this.search.length == 0) {
                     this.restoreState();
                 }
 
@@ -271,7 +270,13 @@
                 if (this.url.length) {
                     this.loadData();
                 }
+            },
+            params() {
+                this.resetState()
 
+                if (this.url.length) {
+                    this.loadData();
+                }
             }
         },
         computed: {
@@ -284,6 +289,12 @@
             },
             hasIcon() {
                 return this.searchIcon.length > 0
+            },
+            isLastPage() {
+                return this.page == this.last
+            },
+            isFirstPage() {
+                return this.page == 1
             }
         },
         methods: {
@@ -336,30 +347,29 @@
                 this.state.sort = this.sort;
             },
             restoreState() {
-                this.records = this.state.records;
-                this.page = this.state.page;
-                this.last = this.state.last;
-                this.total = this.state.total;
-                this.from = this.state.from;
-                this.to = this.state.to;
-                this.sort = this.state.sort;
+                if (this.state.hasOwnProperty('records')) {
+                    this.records = this.state.records;
+                    this.page = this.state.page;
+                    this.last = this.state.last;
+                    this.total = this.state.total;
+                    this.from = this.state.from;
+                    this.to = this.state.to;
+                    this.sort = this.state.sort;
 
-                this.state = {};
+                    this.state = {};
+                }
             },
             resetState() {
-                this.state.records = [];
-                this.state.page = 1;
-                this.state.last = 1;
-                this.state.total = 0;
-                this.state.from = 0;
-                this.state.to = 0;
-                this.state.sort = '';
+                this.records = [];
+                this.page = 1;
+                this.last = 1;
+                this.total = 0;
+                this.from = 0;
+                this.to = 0;
+                this.sort = '';
+                this.search = '';
 
-                if (this.query) {
-                    this.query = '';
-                } else {
-                    this.restoreState()
-                }
+                this.state = {}
             },
             goToFirst() {
                 this.page = 1;
@@ -390,8 +400,8 @@
             },
             assignQuery() {
                 if (this.state.hasOwnProperty('records')) {
-                    if (this.query.length) {
-                        Object.assign(this.params, {query_by: this.query});
+                    if (this.search.length) {
+                        Object.assign(this.params, {search: this.search});
                     }
                 }
             },
